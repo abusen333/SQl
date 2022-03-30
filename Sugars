@@ -1,0 +1,7 @@
+ FORMAT_DATE("%d-%b-%Y", BOOKED_DATE) AS BOOKED_DATE
+ ------------------------------------------------------------------
+ ifnull (PAYMENT_METHOD,
+        'Unknown') AS PAYMENT_METHOD
+        -------------------------------------------------------------
+ AND CAST(L2.LINE_ID AS STRING) = CAST (R2.keyLi AS STRING) )       
+    
