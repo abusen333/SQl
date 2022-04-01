@@ -6,4 +6,7 @@ ifnull (PAYMENT_METHOD,
         ),
         -------------------------------------------------------------
  AND CAST(L2.LINE_ID AS STRING) = CAST (R2.keyLi AS STRING) )       
+    ------------------------------------------------------------------------
+    
+    https://developers.google.com/public-data/docs/canonical/countries_csv
     
