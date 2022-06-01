@@ -7,7 +7,11 @@ ifnull (PAYMENT_METHOD,
         -------------------------------------------------------------
  AND CAST(L2.LINE_ID AS STRING) = CAST (R2.keyLi AS STRING) )       
     ------------------------------------------------------------------------
+    ADD Index 
     
+     ROW_NUMBER() OVER () AS Index
+     ------------------------------------------------------------------
+    Get Country Maping info
     https://developers.google.com/public-data/docs/canonical/countries_csv
     -----------------------------------------------------------------------
     /// Filtering Table by Other Table 
