@@ -2,7 +2,7 @@
  ------------------------------------------------------------------
 DISTINCT(
 ifnull (PAYMENT_METHOD,
-        'Unknown') AS PAYMENT_METHOD
+        'Not Specified') AS PAYMENT_METHOD
         ),
         -------------------------------------------------------------
  AND CAST(L2.LINE_ID AS STRING) = CAST (R2.keyLi AS STRING) )       
