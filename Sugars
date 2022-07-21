@@ -28,6 +28,12 @@ Name LIKE '%SQLBI%Methodology%'                      CONTAINSSTRING( Table[Name]
     ADD Index 
     
      ROW_NUMBER() OVER () AS Index
+     -------------------------------------------------------------------------
+     Running Total 
+     Select id , Month,Amount, 
+     Sum(Amount) OVER (ORDER BY id) as Running_Total 
+     from 
+     bill
 -----------------------------------------------------------------------------
     Get Country Maping info
     https://developers.google.com/public-data/docs/canonical/countries_csv
