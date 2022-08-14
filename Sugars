@@ -1,4 +1,14 @@
- FORMAT_DATE("%d-%b-%Y", BOOKED_DATE) AS BOOKED_DATE
+
+
+Flag Duplicated Values 
+SELECT * FROM (
+  SELECT *, COUNT(1) OVER(PARTITION BY Col ) dup_count
+  FROM Result
+)
+WHERE dup_count > 1
+---------------------------------------------------------------------------
+
+FORMAT_DATE("%d-%b-%Y", BOOKED_DATE) AS BOOKED_DATE
 ----------------------------------------------------------------------------
 DISTINCT(
 ifnull (PAYMENT_METHOD,
