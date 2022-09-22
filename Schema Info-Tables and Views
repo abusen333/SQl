@@ -1,0 +1,10 @@
+select
+ o.name,
+  sum(p.rows) as RowsCount,
+   o.type, concat('select ''', o.name, ''' as ObjectName, count(*) as RowsCount from ', o.name, ' union all ')
+from sys.objects o
+    left join sys.partitions p on p.object_id = o.object_id
+where 
+o.type in ('U', 'V')
+group by o.name, o.type
+order by RowsCount DESC
