@@ -48,18 +48,4 @@ Name LIKE '%SQLBI%Methodology%'                      CONTAINSSTRING( Table[Name]
     Get Country Maping info
     https://developers.google.com/public-data/docs/canonical/countries_csv
 -----------------------------------------------------------------------------
-    /// Filtering Table by Other Table 
-    SELECT
-  T1.VIN AS VIN,
-  T1.IncidentNumber AS IncidentNumber_Line,
-  T1.BillToCustomerName
-FROM
-  `awr-prod-dw.UDS_SERVICE.SERVICE_SALES_LINES` T1
-LEFT JOIN
-  `awr-prod-dw.UDS_SERVICE.SERVICE_REQUESTS` T2
-USING
-  (IncidentNumber)
-WHERE
-  T1.IncidentDate >= '2022-01-01'
-  AND T1.BillCategory = 'INS'
-  AND T1.StatusCode<>'Cancelled'
+
