@@ -6,8 +6,8 @@ With
             , TABLE_NAME AS  'TableName'
         FROM INFORMATION_SCHEMA.COLUMNS
         WHERE     
-        --  COLUMN_NAME LIKE '%_Table'
-             TABLE_NAME LIKE '%Sub Agreement No%'
+        COLUMN_NAME LIKE '%_Table'
+          --   TABLE_NAME LIKE '%Sub Agreement No%'
     
     ),
     _Tabels
@@ -41,9 +41,9 @@ With
     )
 SELECT 
  
---C.ColumnName,
+C.ColumnName,
  C.TableName,
---T.CountRows,
+T.CountRows,
 T.TotalSpaceMB AS TableSpaceMB
 FROM _Colums C
 LEFT  JOIN
@@ -51,8 +51,8 @@ _Tabels T
 ON
 T.TableName = C.TableName
 GROUP by 
---C.ColumnName,
+C.ColumnName,
  C.TableName,
---T.CountRows,
+T.CountRows,
 T.TotalSpaceMB 
 
