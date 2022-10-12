@@ -1,5 +1,6 @@
-
-
+Generate Key in selection statement 
+select name, dense_rank() over (order by name) as uniquenum
+------------------
 Flag Duplicated Values 
 SELECT * FROM (
   SELECT *, COUNT(1) OVER(PARTITION BY Col ) dup_count
