@@ -1,0 +1,75 @@
+ Step1 AS (
+  SELECT
+    _Sales.Amount AS SalesAmount,
+    EXTRACT ( Year
+    FROM
+      _Sales.InvoiceDate ) AS Year
+  FROM
+    _Sales ),
+  Step2 AS (
+  SELECT
+    Year,
+    SUM(SalesAmount) AS SalesAmount
+  FROM
+    Step1
+  GROUP BY
+    Year ),
+  Result1 AS (
+  SELECT
+    *,
+    SUM(SalesAmount) OVER(ORDER BY Year ) AS RTAmount,
+    LAG(SalesAmount, 1) OVER(ORDER BY Year ) AS PY
+  FROM
+    Step2),
+  Step3 AS (
+  SELECT
+    Amount AS SalesAmount,
+    EXTRACT(Year
+    FROM
+      InvoiceDate) AS Year,
+    EXTRACT( Month
+    FROM
+      Invoicedate) AS Month,
+    FORMAT_DATE('%b %Y',Invoicedate) AS Year_Month
+  FROM
+    _Sales ),
+  Step4 AS (
+  SELECT
+    SUM(SalesAmount) AS SalesAmount,
+    Year,
+    Month,
+    Year_Month
+  FROM
+    Step3
+  GROUP BY
+    Year,
+    Month,
+    Year_Month ),
+  Step5 AS (
+  SELECT
+    Year,
+    Month,
+    Year_Month,
+    SalesAmount,
+    SUM(SalesAmount) OVER(PARTITION BY Year ORDER BY Year, Month ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS SalesYTD,
+    LAG( SalesAmount, 1) OVER(ORDER BY year, Month ) AS PreviousMonth,
+    SUM(SalesAmount) OVER(PARTITION BY Year) AS YearlySales,
+
+  FROM
+    Step4)
+SELECT
+  Year,
+  Month,
+  Year_Month,
+  FORMAT("%'.0f", SalesAmount ) AS SalesAmount,
+  FORMAT("%'.0f", SalesYTD) AS SalesYTD,
+  FORMAT("%'.0f ",PreviousMonth ) AS PreviousMonth,
+  YearlySales,
+  Format('%.2f%%', ( SalesAmount - PreviousMonth )*100 / PreviousMonth )as MOM_Pcnt,
+  Format('%.2f%%',( ( SalesAmount/ PreviousMonth ) -1 )*100 ) as MOM_Pcnt2
+
+FROM
+  Step5
+ORDER BY
+  Year,
+  Month
