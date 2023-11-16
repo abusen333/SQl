@@ -1,0 +1,16 @@
+  Result AS (
+  SELECT
+    status,
+    SUM(amount) AS total_amount,
+    EXTRACT( Year
+    FROM
+      receipt_date) AS year
+  FROM
+    _Qry
+  GROUP BY
+    status,
+    receipt_date )
+SELECT
+  *
+FROM
+  Result PIVOT ( SUM(total_amount) FOR year IN  ( 2022,2023,2021,2020 , 2019))
